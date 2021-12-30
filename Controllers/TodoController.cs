@@ -100,4 +100,29 @@ public class TodoController : ControllerBase
         }
 
     }   
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteTodo(int id)
+    {
+        try
+        {
+            var result = await appDbContext.Todos.FirstOrDefaultAsync(e => e.Id == id);
+            
+            if(result == null)
+            {
+               return NotFound($"Todo with Id = {id} not found"); 
+            }
+            appDbContext.Todos.Remove(result);
+            await appDbContext.SaveChangesAsync();
+
+            return Ok($"Todo with Id = {id} deleted");
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+            "Error deleting todo from database");
+        }
+        
+        
+    }
 }
