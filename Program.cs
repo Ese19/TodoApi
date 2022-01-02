@@ -26,6 +26,10 @@ app.UseSwaggerUI(options => {
     options.RoutePrefix = string.Empty;
 });
 
+// Migrate to cloud
+app.Services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
