@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Data;
@@ -32,6 +34,7 @@ public class TodoController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<Todo>> GetTodo(int id)
     { 
         try
@@ -53,6 +56,7 @@ public class TodoController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<Todo>> AddTodo(Todo todo)
     {
         try
@@ -74,6 +78,7 @@ public class TodoController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<Todo>> EditTodo(int id, Todo todo)
     {
         try
@@ -102,6 +107,7 @@ public class TodoController : ControllerBase
     }   
 
     [HttpDelete("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult> DeleteTodo(int id)
     {
         try
